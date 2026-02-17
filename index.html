@@ -1,1 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio Profissional de Leonardo do Vale - Especialista em Cybersecurity e SOC">
+    <title>Leonardo do Vale | Offensive & Defensive Security</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@100;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================================
+           CSS VARIABLES & ROOT
+           ============================================================ */
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg-black: #050505;
+            --card-bg: rgba(20, 20, 25, 0.8);
+            --text-main: #e0e0e0;
+            --text-dim: #a0a0a0;
+            --font-mono: 'Fira Code', monospace;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --glow: 0 0 15px rgba(0, 242, 255, 0.4);
+        }
 
+        /* ============================================================
+           RESET & BASE STYLES
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        canvas#networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        /* ============================================================
+           NAVIGATION (SCIENTIFIC DESIGN)
+           ============================================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 9999;
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        /* ============================================================
+           HERO SECTION (DETAILED)
+           ============================================================ */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            gap: 50px;
+            position: relative;
+        }
+
+        .hero-info {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-info h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-info span {
+            color: var(--primary);
+            display: block;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            border: 2px solid var(--primary);
+            animation: morphing 10s infinite alternate;
+            z-index: 5;
+            position: relative;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            border: 2px solid var(--secondary);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morphing 12s infinite reverse;
+            opacity: 0.5;
+        }
+
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+
+        /* ============================================================
+           SECTION: SKILLS (GRID COMPLEX)
+           ============================================================ */
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        .skill-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .skill-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .skill-item p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .skill-tags {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            color: var(--primary);
+        }
+
+        /* ============================================================
+           TERMINAL SECTION (CV SIMULATION)
+           ============================================================ */
+        .terminal-container {
+            background: #0d1117;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 900px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 20px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-body {
+            padding: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #d1d5da;
+            font-size: 0.9rem;
+            min-height: 400px;
+        }
+
+        .line { margin-bottom: 10px; display: flex; gap: 10px; }
+        .prompt { color: #58a6ff; font-weight: bold; }
+        .command { color: #f0883e; }
+        .output { color: #8b949e; padding-left: 20px; border-left: 1px solid #30363d; margin: 10px 0; }
+        .highlight { color: var(--primary); }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            padding: 50px 10%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .social-links a {
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: scale(1.2);
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="networkCanvas"></canvas>
+
+    <nav>
+        <a href="#" class="nav-logo">LEONARDO_VALE.exe</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Stack</a></li>
+            <li><a href="#experience">Expertise</a></li>
+            <li><a href="#terminal">CLI_CV</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-info">
+                <div class="badge">Security Operations Center Specialist</div>
+                <h1>Defending the <span>Digital Frontier.</span></h1>
+                <p class="hero-description">
+                    Sou Leonardo do Vale, especialista em defesa cibernética focado em SOC, SIEM e Resposta a Incidentes. 
+                    Transformando logs complexos em estratégias de segurança resilientes.
+                </p>
+                <div class="cta-group">
+                    <button class="btn-main" onclick="location.href='#terminal'">Initialize Handshake</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="image-container">
+                    <img src="1769701798901~2.jpg" alt="Leonardo do Vale">
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-header">
+                <h2>01. TECHNICAL_STACK</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <h3>Threat Detection</h3>
+                    <p>Implementação de regras de detecção avançadas para monitoramento de força bruta e anomalias de rede.</p>
+                    <div class="skill-tags">
+                        <span class="tag">SIEM</span>
+                        <span class="tag">Google SecOps</span>
+                        <span class="tag">SOAR</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h3>Sec Development</h3>
+                    <p>Desenvolvimento de ferramentas de automação em Python para análise de logs e triagem de alertas.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Linux</span>
+                        <span class="tag">Bash</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h3>Network Defense</h3>
+                    <p>Análise profunda de tráfego e configuração de ambientes seguros baseados em infraestrutura crítica.</p>
+                    <div class="skill-tags">
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag">Wireshark</span>
+                        <span class="tag">Firewalls</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="terminal">
+            <div class="section-header">
+                <h2>02. SYSTEM_LOGS (CV)</h2>
+            </div>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="line">
+                        <span class="prompt">guest@leonardovale:~$</span>
+                        <span class="command">fetch --profile lvale</span>
+                    </div>
+                    <div class="output">
+                        > Fetching data from: Universidad Cidade de São Paulo...<br>
+                        > Academic: Tecnólogo em Cibersegurança (2026-2027)<br>
+                        > Core Certifications: Google Cybersecurity Professional, IT Support, Python Intermediate.<br>
+                        > Status: <span class="highlight">Actively seeking Security Analyst roles.</span>
+                    </div>
+                    <div class="line">
+                        <span class="prompt">guest@leonardovale:~$</span>
+                        <span class="command">list --projects</span>
+                    </div>
+                    <div class="output">
+                        - Log Analyzer v1.0 [Python]: Detecção de Brute Force em tempo real.<br>
+                        - SecOps Automation: Integração SOAR para resposta automatizada.<br>
+                        - Network Monitor: Script Bash para auditoria de portas abertas.
+                    </div>
+                    <div class="line">
+                        <span class="prompt">guest@leonardovale:~$</span>
+                        <span class="command">|</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">Email</a>
+        </div>
+        <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+            STAY_SAFE // ENCRYPTED_CONNECTION_ESTABLISHED // 2026
+        </p>
+    </footer>
+
+    <script>
+        /* ============================================================
+           NETWORK PARTICLES ENGINE (CANVAS)
+           ============================================================ */
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+        const numberOfParticles = 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = '#00f2ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = 'rgba(0, 242, 255, 0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particlesArray = [];
+            init();
+        });
+
+        init();
+        animate();
+
+        /* ============================================================
+           TYPEWRITER TERMINAL EFFECT
+           ============================================================ */
+        const terminal = document.getElementById('terminalBody');
+        // Você pode expandir aqui para criar interatividade real no terminal via JS
+        console.log("System Initialized... Leonardo do Vale Profile Loaded.");
+    </script>
+</body>
+</html>
