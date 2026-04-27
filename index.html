@@ -1,251 +1,559 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leonardo do Vale | SOC Analyst</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-:root {
-  --bg: #050505;
-  --card: #0f0f0f;
-  --primary: #00e0ff;
-  --text: #fff;
-  --sub: #aaa;
-}
-
-* {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leonardo Monteiro do Vale | Cybersecurity Portfolio</title>
+  <meta name="description" content="Landing page profissional de Leonardo Monteiro do Vale - Cybersecurity | SOC | Blue Team | SIEM | Python" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070b;
+      --bg-soft: #0b1020;
+      --card: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(148, 163, 184, 0.14);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --secondary: #22c55e;
+      --accent: #8b5cf6;
+      --danger: #ef4444;
+      --glow: 0 0 40px rgba(56, 189, 248, 0.15);
+      --shadow: 0 20px 80px rgba(2, 8, 23, 0.45);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --max: 1280px;
+      --grid: rgba(148, 163, 184, 0.06);
+    }* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.12), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(139, 92, 246, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.08), transparent 35%),
+    linear-gradient(180deg, #04050a 0%, #06070b 35%, #090d18 100%);
   color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* NAV */
-nav {
+body::before {
+  content: "";
   position: fixed;
-  width: 100%;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(10px);
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 85%);
+  pointer-events: none;
+  z-index: -2;
 }
 
-.logo {
-  font-weight: bold;
+.noise {
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: -1;
+  background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+  background-size: 12px 12px;
 }
 
-/* MENU MOBILE */
-.menu {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background: var(--card);
-  border-radius: 10px;
-  padding: 15px;
-}
-
-.menu a {
-  margin: 10px 0;
-  color: white;
-  text-decoration: none;
-}
-
-.menu-btn {
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* DESKTOP */
-@media(min-width:768px){
-  .menu {
-    display: flex !important;
-    flex-direction: row;
-    position: static;
-    background: none;
-  }
-
-  .menu a {
-    margin-left: 20px;
-  }
-
-  .menu-btn {
-    display: none;
-  }
-}
-
-/* CONTAINER */
 .container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 100px 20px 40px;
+  width: min(100% - 32px, var(--max));
+  margin: 0 auto;
 }
 
-/* HERO */
+.section {
+  padding: 96px 0;
+  position: relative;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: rgba(56, 189, 248, 0.08);
+  border-radius: 999px;
+  color: var(--primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
 .hero {
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 48px 0;
 }
 
-.hero img {
-  width: 160px;
-  border-radius: 50%;
-  margin-top: 20px;
-  border: 3px solid var(--primary);
-  box-shadow: 0 0 20px var(--primary);
-}
-
-.highlight {
-  color: var(--primary);
-}
-
-.btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 25px;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  text-decoration: none;
-}
-
-section {
-  margin-top: 60px;
-}
-
-.grid {
+.hero-grid {
   display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+  margin: 18px 0 22px;
+}
+
+.hero-copy h1 span {
+  display: block;
+  background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 45%, #38bdf8 70%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-copy p {
+  color: var(--muted);
+  font-size: 1.08rem;
+  max-width: 760px;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.stat {
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.stat span {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.hero-card {
+  position: relative;
+  padding: 28px;
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.65));
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  box-shadow: var(--shadow), var(--glow);
+  backdrop-filter: blur(22px);
+  overflow: hidden;
+  animation: float 7s ease-in-out infinite;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(56,189,248,0.55), rgba(139,92,246,0.35), transparent 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.profile {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.profile img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.terminal {
+  background: rgba(2, 6, 23, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 20px;
+  padding: 18px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.terminal-line { display: flex; gap: 10px; margin-bottom: 10px; }
+.prompt { color: var(--secondary); }
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background: var(--primary);
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+.title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   gap: 20px;
+  margin-bottom: 36px;
+}
+
+.title h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.title p {
+  color: var(--muted);
+  max-width: 620px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
 .card {
   background: var(--card);
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(56, 189, 248, 0.24);
+  box-shadow: 0 20px 80px rgba(2, 8, 23, 0.55), 0 0 0 1px rgba(56, 189, 248, 0.08);
 }
 
 .icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, rgba(56,189,248,0.16), rgba(139,92,246,0.16));
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  font-size: 1.4rem;
+}
+
+.card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 0.96rem; }
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.tool {
+  text-align: center;
+  padding: 24px 18px;
+}
+
+.tool-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: white;
+  background: linear-gradient(135deg, rgba(56,189,248,0.22), rgba(139,92,246,0.22));
+  border: 1px solid rgba(148,163,184,0.14);
+}
+
+.timeline { display: grid; gap: 18px; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 22px;
+}
+
+.timeline-year {
+  font-weight: 800;
   color: var(--primary);
-  font-size: 25px;
-  margin-bottom: 10px;
+  font-size: 0.95rem;
 }
 
-@media(min-width:768px){
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-  .grid-3 { grid-template-columns: repeat(3,1fr); }
+.project-list { display: grid; gap: 18px; }
+
+.project {
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
 }
-</style>
+
+.project::after {
+  content: "";
+  position: absolute;
+  inset: auto -30% -60% auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56,189,248,0.12), transparent 60%);
+  pointer-events: none;
+}
+
+.project ul {
+  margin-top: 14px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.project li { margin-bottom: 8px; }
+
+.certs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.cert {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.cert-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(56,189,248,0.18));
+  border: 1px solid rgba(148,163,184,0.12);
+}
+
+.footer {
+  padding: 48px 0 72px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 1100px) {
+  .hero-grid, .grid-3, .tools, .certs { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding-top: 120px; }
+  .timeline-item { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 780px) {
+  .title { flex-direction: column; align-items: start; }
+  .section { padding: 72px 0; }
+  .hero-copy h1 { font-size: clamp(2.5rem, 16vw, 4rem); }
+}
+
+  </style>
 </head>
-
 <body>
-
-<nav>
-  <div class="logo">Leonardo.exe</div>
-  <div class="menu-btn" onclick="toggleMenu()">
-    <i class="fa fa-bars"></i>
-  </div>
-
-  <div class="menu" id="menu">
-    <a href="#sobre">Sobre</a>
-    <a href="#projetos">Projetos</a>
-    <a href="#stack">Stack</a>
-    <a href="#certificados">Certificados</a>
-    <a href="#contato">Contato</a>
-  </div>
-</nav>
-
-<div class="container">
-
-<section class="hero" id="sobre">
-  <h1>Leonardo do Vale</h1>
-  <h2>Defendendo a <span class="highlight">Fronteira Digital</span></h2>
-  <p>Especialista em SOC, SIEM e Resposta a Incidentes.</p>
-
-  <a href="#projetos" class="btn">Explorar Projetos</a>
-
-  <img src="1769701798901~2.jpg">
-</section>
-
-<section id="projetos">
-  <h2>Projetos</h2>
-
-  <div class="grid grid-2">
-    <div class="card">
-      <i class="fa fa-shield icon"></i>
-      <h3>Log Analyzer</h3>
-      <p>Detecção de ataques de força bruta em logs Linux.</p>
-      <ul>
-        <li>Regex</li>
-        <li>Parsing</li>
-        <li>Detecção de IP suspeito</li>
-      </ul>
+  <div class="noise"></div>  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="badge">Cybersecurity • SOC • Blue Team</span>
+        <h1>Leonardo <span>Monteiro do Vale</span></h1>
+        <p>
+          Estudante de Cibersegurança com foco em Security Operations Center (SOC), monitoramento contínuo,
+          análise de logs, correlação de eventos e automação de detecção. Construindo soluções práticas para
+          detecção, investigação e resposta com mentalidade defensiva e visão orientada a processos.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><strong>7+</strong><span>Certificações</span></div>
+          <div class="stat"><strong>SOC</strong><span>Blue Team Mindset</span></div>
+          <div class="stat"><strong>Python</strong><span>Automação & Parsing</span></div>
+        </div>
+      </div><div class="hero-card reveal">
+    <div class="profile">
+      <img src="1769701798901~2.jpg" alt="Leonardo Monteiro do Vale">
+      <div>
+        <h3 style="font-size:1.3rem; font-weight:800;">SOC Analyst Path</h3>
+        <p style="color:var(--muted);">Ribeirão Pires • São Paulo • Brasil</p>
+      </div>
     </div>
 
-    <div class="card">
-      <i class="fa fa-bug icon"></i>
-      <h3>Lab de Ataques</h3>
-      <p>Ambiente de testes de segurança.</p>
-      <ul>
-        <li>Força bruta</li>
-        <li>Varredura</li>
-        <li>Análise comportamental</li>
-      </ul>
+    <div class="terminal">
+      <div class="terminal-line"><span class="prompt">leo@soc:~$</span><span>cat professional_profile.txt</span></div>
+      <div class="terminal-line"><span>> Monitoring security events...</span></div>
+      <div class="terminal-line"><span>> Parsing authentication logs...</span></div>
+      <div class="terminal-line"><span>> Detecting brute force patterns...</span></div>
+      <div class="terminal-line"><span>> Investigating IOC indicators...</span></div>
+      <div class="terminal-line"><span>> Building defensive automation</span><span class="cursor"></span></div>
     </div>
   </div>
-</section>
-
-<section id="stack">
-  <h2>Stack</h2>
-
-  <div class="grid grid-3">
-    <div class="card">Python</div>
-    <div class="card">Linux</div>
-    <div class="card">SIEM</div>
-    <div class="card">Regex</div>
-    <div class="card">Git</div>
-    <div class="card">TCP/IP</div>
-  </div>
-</section>
-
-<section id="certificados">
-  <h2>Certificados</h2>
-
-  <div class="card">
-    <p>Google Cybersecurity Professional Certificate</p>
-    <p>Security Operations Fundamentals</p>
-    <p>SENAI - Resposta a Incidentes</p>
-  </div>
-</section>
-
-<section id="contato">
-  <h2>Contato</h2>
-
-  <div class="card">
-    <p>Email: monteiroleonardo507@gmail.com</p>
-    <p>GitHub: github.com/Leonardo-cyber-vale</p>
-    <p>LinkedIn: linkedin.com/in/leonardodovale</p>
-  </div>
-</section>
-
 </div>
 
-<script>
-function toggleMenu(){
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-}
-</script>
+  </section>  <section class="section">
+    <div class="container">
+      <div class="title reveal">
+        <div>
+          <span class="badge">Especialidades</span>
+          <h2>Core Expertise</h2>
+        </div>
+        <p>Base sólida em operações defensivas, análise de segurança, automação e investigação inicial de incidentes.</p>
+      </div><div class="grid-3">
+    <div class="card reveal"><div class="icon">🛡️</div><h3>Security Operations</h3><p>Monitoramento de eventos, triagem de alertas, investigação inicial, classificação e documentação de incidentes.</p></div>
+    <div class="card reveal"><div class="icon">📊</div><h3>SIEM & Detection</h3><p>Correlação básica de eventos, análise de autenticação, identificação de padrões anômalos e tuning inicial.</p></div>
+    <div class="card reveal"><div class="icon">🐍</div><h3>Python for Security</h3><p>Parsing de logs, Regex, automação de verificações, manipulação de arquivos e estruturação de dados para análise.</p></div>
+  </div>
+</div>
 
-</body>
+  </section>  <section class="section">
+    <div class="container">
+      <div class="title reveal">
+        <div>
+          <span class="badge">Ferramentas</span>
+          <h2>Stack & Tools</h2>
+        </div>
+        <p>Tecnologias, plataformas e ferramentas utilizadas no laboratório prático e no desenvolvimento de competências SOC.</p>
+      </div><div class="tools">
+    <div class="card tool reveal"><div class="tool-logo">WZ</div><h3>Wazuh</h3><p>SIEM / XDR</p></div>
+    <div class="card tool reveal"><div class="tool-logo">SP</div><h3>Splunk</h3><p>Search & Analytics</p></div>
+    <div class="card tool reveal"><div class="tool-logo">CH</div><h3>Chronicle</h3><p>SecOps Platform</p></div>
+    <div class="card tool reveal"><div class="tool-logo">WS</div><h3>Wireshark</h3><p>Network Analysis</p></div>
+    <div class="card tool reveal"><div class="tool-logo">TD</div><h3>tcpdump</h3><p>Packet Capture</p></div>
+    <div class="card tool reveal"><div class="tool-logo">LX</div><h3>Linux</h3><p>CLI / Hardening</p></div>
+    <div class="card tool reveal"><div class="tool-logo">GT</div><h3>Git</h3><p>Version Control</p></div>
+    <div class="card tool reveal"><div class="tool-logo">SQ</div><h3>SQL</h3><p>Data Query</p></div>
+  </div>
+</div>
+
+  </section>  <section class="section">
+    <div class="container">
+      <div class="title reveal">
+        <div>
+          <span class="badge">Experiência prática</span>
+          <h2>Projects</h2>
+        </div>
+        <p>Projetos com foco em automação, detecção, investigação e desenvolvimento de lógica defensiva.</p>
+      </div><div class="project-list">
+    <div class="card project reveal">
+      <h3>Log Analyzer — Detecção Automatizada de Força Bruta</h3>
+      <p>Projeto em Python voltado para análise de logs de autenticação Linux com foco em identificação de múltiplas tentativas de login inválidas por IP.</p>
+      <ul>
+        <li>Parsing de arquivos e normalização de eventos.</li>
+        <li>Uso de Regex para extração de padrões suspeitos.</li>
+        <li>Contagem de tentativas, limiar de alerta e simulação de eventos.</li>
+        <li>Identificação de brute force e comportamento anômalo.</li>
+        <li>Versionamento com Git e documentação técnica no GitHub.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  </section>  <section class="section">
+    <div class="container">
+      <div class="title reveal">
+        <div>
+          <span class="badge">Certificações</span>
+          <h2>Certificates</h2>
+        </div>
+        <p>Formação complementar orientada a operações de segurança, resposta a incidentes e fundamentos técnicos.</p>
+      </div><div class="certs">
+    <div class="card cert reveal"><div class="cert-badge">G</div><div><h3>Google Security Operations — Fundamentals</h3><p>Fundamentos de operações e fluxo SOC.</p></div></div>
+    <div class="card cert reveal"><div class="cert-badge">G</div><div><h3>Google Security Operations — SOAR Analyst</h3><p>Automação e orquestração de resposta.</p></div></div>
+    <div class="card cert reveal"><div class="cert-badge">G</div><div><h3>Google Cybersecurity Professional Certificate</h3><p>Base prática em segurança defensiva.</p></div></div>
+    <div class="card cert reveal"><div class="cert-badge">S</div><div><h3>SENAI — Prevenção e Reação a Incidentes</h3><p>Fundamentos de resposta a incidentes.</p></div></div>
+    <div class="card cert reveal"><div class="cert-badge">B</div><div><h3>Fundação Bradesco — Python Básico</h3><p>Base de automação e scripting.</p></div></div>
+    <div class="card cert reveal"><div class="cert-badge">U</div><div><h3>Udemy — IT Support</h3><p>Fundamentos de suporte e troubleshooting.</p></div></div>
+  </div>
+</div>
+
+  </section>  <section class="section">
+    <div class="container">
+      <div class="title reveal">
+        <div>
+          <span class="badge">Formação</span>
+          <h2>Education</h2>
+        </div>
+        <p>Construção acadêmica e desenvolvimento contínuo com foco em segurança ofensiva e defensiva.</p>
+      </div><div class="timeline">
+    <div class="card timeline-item reveal">
+      <div class="timeline-year">2026 — 2027</div>
+      <div><h3>Tecnólogo em Cibersegurança</h3><p>Universidade Cruzeiro do Sul • Em andamento</p></div>
+    </div>
+    <div class="card timeline-item reveal">
+      <div class="timeline-year">2025</div>
+      <div><h3>Ensino Médio Completo</h3><p>Instituto Federal de Educação, Ciência e Tecnologia de São Paulo</p></div>
+    </div>
+  </div>
+</div>
+
+  </section>  <footer class="footer">
+    <div class="container">
+      <p>Leonardo Monteiro do Vale • Cybersecurity Portfolio • SOC • Blue Team • GitHub Ready</p>
+    </div>
+  </footer>  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script></body>
 </html>
