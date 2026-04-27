@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leonardo do Vale | Cibersegurança</title>
+<title>Leonardo do Vale | SOC Analyst</title>
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root {
-  --bg: #0a0a0a;
-  --card: #121212;
+  --bg: #050505;
+  --card: #0f0f0f;
   --primary: #00e0ff;
-  --text: #ffffff;
-  --sub: #a0a0a0;
+  --text: #fff;
+  --sub: #aaa;
 }
 
 * {
@@ -24,26 +27,41 @@
 body {
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
+}
+
+/* PARTICLES */
+#particles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 /* NAV */
 nav {
   position: fixed;
   width: 100%;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(10px);
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
   z-index: 1000;
 }
 
 nav a {
-  color: var(--text);
+  color: white;
   text-decoration: none;
   margin-left: 20px;
+  transition: 0.3s;
 }
 
+nav a:hover {
+  color: var(--primary);
+}
+
+/* CONTAINER */
 .container {
   max-width: 1100px;
   margin: auto;
@@ -61,6 +79,7 @@ nav a {
   width: 180px;
   border-radius: 50%;
   border: 3px solid var(--primary);
+  box-shadow: 0 0 20px var(--primary);
 }
 
 .highlight {
@@ -69,12 +88,11 @@ nav a {
 
 .btn {
   display: inline-block;
-  margin-top: 15px;
   padding: 12px 25px;
   border: 1px solid var(--primary);
   color: var(--primary);
   text-decoration: none;
-  border-radius: 6px;
+  margin-top: 15px;
   transition: 0.3s;
 }
 
@@ -85,14 +103,18 @@ nav a {
 
 /* SECTIONS */
 section {
-  margin-top: 60px;
+  margin-top: 70px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.6s;
 }
 
-h2 {
-  margin-bottom: 20px;
+section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* CARDS */
+/* GRID */
 .grid {
   display: grid;
   gap: 20px;
@@ -102,19 +124,26 @@ h2 {
   background: var(--card);
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid #1f1f1f;
+  border: 1px solid #1a1a1a;
   transition: 0.3s;
 }
 
 .card:hover {
   transform: translateY(-5px);
   border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0,224,255,0.3);
+}
+
+/* ICONS */
+.icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: var(--primary);
 }
 
 /* LIST */
 ul {
   list-style: none;
-  margin-top: 10px;
 }
 
 li {
@@ -122,15 +151,8 @@ li {
   margin-bottom: 5px;
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  margin-top: 50px;
-  color: var(--sub);
-}
-
 /* RESPONSIVO */
-@media (min-width: 768px) {
+@media(min-width:768px){
   .hero {
     flex-direction: row;
     align-items: center;
@@ -142,7 +164,7 @@ footer {
   }
 
   .grid-3 {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3,1fr);
   }
 }
 </style>
@@ -150,9 +172,10 @@ footer {
 
 <body>
 
-<!-- NAV -->
+<canvas id="particles"></canvas>
+
 <nav>
-  <div><strong>Leonardo.exe</strong></div>
+  <strong>Leonardo.exe</strong>
   <div>
     <a href="#projetos">Projetos</a>
     <a href="#stack">Stack</a>
@@ -163,98 +186,122 @@ footer {
 
 <div class="container">
 
-<!-- HERO -->
 <section class="hero">
   <div>
     <h1>Leonardo do Vale</h1>
     <h2>Defendendo a <span class="highlight">Fronteira Digital</span></h2>
-
-    <p>
-      Estudante de Cibersegurança focado em SOC, SIEM e Resposta a Incidentes.
-      Experiência prática com análise de logs, detecção de ataques e automação em Python.
-    </p>
-
-    <a href="#projetos" class="btn">Ver Projetos</a>
+    <p>Focado em SOC, SIEM e Resposta a Incidentes.</p>
+    <a href="#projetos" class="btn">Explorar Projetos</a>
   </div>
 
   <img src="sua-foto.jpg">
 </section>
 
-<!-- PROJETOS -->
 <section id="projetos">
   <h2>Projetos</h2>
-
   <div class="grid grid-2">
     <div class="card">
-      <h3>🔐 Log Analyzer (Python)</h3>
-      <p>Detecção automatizada de ataques de força bruta em logs Linux.</p>
-
+      <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <h3>Log Analyzer</h3>
       <ul>
-        <li>Parsing de logs</li>
-        <li>Regex para padrões suspeitos</li>
-        <li>Contagem de tentativas por IP</li>
-        <li>Simulação de ataques</li>
+        <li>Detecção de brute force</li>
+        <li>Regex e parsing</li>
+        <li>Logs Linux</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>🛡️ Simulação de Ataques</h3>
-      <p>Ambiente de laboratório para testes de segurança.</p>
-
+      <div class="icon"><i class="fa-solid fa-bug"></i></div>
+      <h3>Lab de Ataques</h3>
       <ul>
-        <li>Força bruta</li>
+        <li>Simulação real</li>
         <li>Varredura de portas</li>
-        <li>Análise de comportamento</li>
+        <li>Análise comportamental</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- STACK -->
 <section id="stack">
-  <h2>Stack Técnica</h2>
-
+  <h2>Stack</h2>
   <div class="grid grid-3">
-    <div class="card">Python</div>
-    <div class="card">Linux</div>
-    <div class="card">SIEM</div>
-    <div class="card">Regex</div>
-    <div class="card">Git</div>
-    <div class="card">TCP/IP</div>
+    <div class="card"><i class="fab fa-python icon"></i>Python</div>
+    <div class="card"><i class="fab fa-linux icon"></i>Linux</div>
+    <div class="card"><i class="fas fa-network-wired icon"></i>SIEM</div>
+    <div class="card"><i class="fas fa-code icon"></i>Regex</div>
+    <div class="card"><i class="fab fa-git-alt icon"></i>Git</div>
+    <div class="card"><i class="fas fa-server icon"></i>TCP/IP</div>
   </div>
 </section>
 
-<!-- CERTIFICADOS -->
 <section id="certificados">
-  <h2>Certificações</h2>
-
-  <div class="card">
-    <ul>
-      <li>Google Cybersecurity Professional Certificate</li>
-      <li>Google Security Operations Fundamentals</li>
-      <li>SOAR Analyst</li>
-      <li>SENAI - Resposta a Incidentes</li>
-      <li>Python - Fundação Bradesco</li>
-    </ul>
+  <h2>Certificados</h2>
+  <div class="grid grid-2">
+    <div class="card"><i class="fa-brands fa-google icon"></i>Google Cybersecurity</div>
+    <div class="card"><i class="fa-brands fa-google icon"></i>Security Operations</div>
+    <div class="card"><i class="fa-solid fa-user-shield icon"></i>SENAI IR</div>
+    <div class="card"><i class="fa-solid fa-code icon"></i>Python</div>
   </div>
 </section>
 
-<!-- CONTATO -->
 <section id="contato">
   <h2>Contato</h2>
-
   <div class="card">
-    <p>Email: monteiroleonardo507@gmail.com</p>
-    <p>GitHub: github.com/Leonardo-cyber-vale</p>
-    <p>LinkedIn: linkedin.com/in/leonardodovale</p>
+    <p><i class="fa-solid fa-envelope"></i> monteiroleonardo507@gmail.com</p>
+    <p><i class="fa-brands fa-github"></i> github.com/Leonardo-cyber-vale</p>
+    <p><i class="fa-brands fa-linkedin"></i> linkedin.com/in/leonardodovale</p>
   </div>
 </section>
 
-<footer>
-  <p>© 2026 Leonardo do Vale</p>
-</footer>
-
 </div>
+
+<script>
+// ANIMAÇÃO SCROLL
+const sections = document.querySelectorAll("section");
+
+window.addEventListener("scroll", () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add("show");
+    }
+  });
+});
+
+// PARTICLES SIMPLES
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    vx: (Math.random()-0.5)*1,
+    vy: (Math.random()-0.5)*1
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p=>{
+    p.x += p.vx;
+    p.y += p.vy;
+
+    ctx.fillStyle = "#00e0ff";
+    ctx.fillRect(p.x,p.y,2,2);
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
 
 </body>
 </html>
